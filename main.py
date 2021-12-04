@@ -1,4 +1,6 @@
 from tkinter import *
+from fonctions import *
+import csv
 
 
 def cmd_quit():
@@ -23,6 +25,15 @@ def cmd_saler_disconnect():
     var_pw.set("")
     interface_saler.pack_forget()
     interface_connect.pack(pady=70)
+
+def cmd_display_stock():
+    interface_saler.pack_forget()
+    interface_stock.pack(pady=50)
+
+def cmd_stock_quit():
+    interface_stock.pack_forget()
+    interface_saler.pack(pady=50)
+
 
 
 # // ----- // CREATION DE LA FENETRE // ----- //
@@ -91,7 +102,7 @@ btn_manager_saler_interface.pack(pady=5)
 # > --- creation des widgets --- <
 interface_saler = Frame(wn)
 btn_saler_disconnect = Button(interface_saler, width=20, text="deconexion", command=cmd_saler_disconnect)
-btn_saler_stock = Button(interface_saler, width=20, text="afficher le stock")
+btn_saler_stock = Button(interface_saler, width=20, text="afficher le stock", command=cmd_display_stock)
 btn_saler_ticket = Button(interface_saler, width=20, text="ticket de caisse")
 btn_saler_export = Button(interface_saler, width=20, text="export statistique")
 
@@ -101,5 +112,63 @@ btn_saler_stock.pack(pady=5)
 btn_saler_ticket.pack(pady=5)
 btn_saler_export.pack(pady=5)
 
+
+# // ----- // INTERFACE STOCK // ----- //
+# > --- creation des widgets --- <
+list_fonction = [
+    cmd_btn_stock_0,
+    cmd_btn_stock_1,
+    cmd_btn_stock_2,
+    cmd_btn_stock_3,
+    cmd_btn_stock_4,
+    cmd_btn_stock_5,
+    cmd_btn_stock_6,
+    cmd_btn_stock_7,
+    cmd_btn_stock_8,
+    cmd_btn_stock_9,
+    cmd_btn_stock_10,
+    cmd_btn_stock_11,
+    cmd_btn_stock_12,
+    cmd_btn_stock_13,
+    cmd_btn_stock_14,
+    cmd_btn_stock_15,
+    cmd_btn_stock_16,
+    cmd_btn_stock_17,
+    cmd_btn_stock_18,
+    cmd_btn_stock_19,
+    cmd_btn_stock_20,
+    cmd_btn_stock_21,
+    cmd_btn_stock_22,
+    cmd_btn_stock_23,
+    cmd_btn_stock_24,
+    cmd_btn_stock_25,
+    cmd_btn_stock_26,
+    cmd_btn_stock_27,
+    cmd_btn_stock_28,
+    cmd_btn_stock_29,
+    cmd_btn_stock_30,
+    cmd_btn_stock_31,
+    cmd_btn_stock_32,
+    cmd_btn_stock_33,
+    cmd_btn_stock_34,
+    cmd_btn_stock_35,
+    cmd_btn_stock_36,
+    cmd_btn_stock_37,
+    cmd_btn_stock_38,
+    cmd_btn_stock_39
+]
+interface_stock = Frame(wn)
+frame_btns = Frame(interface_stock)
+list_btn_stock = [] 
+btn_stock_quit = Button(interface_stock, width=20, text="retour", command=cmd_stock_quit)
+for x in range(10):
+    for y in range(4):
+        new_btn = Button(frame_btns, width=1, height=1, command=list_fonction[x+y*10])
+        new_btn.grid(column=x, row=y)
+        list_btn_stock.append(new_btn)
+
+# > --- placement des widgets --- <
+frame_btns.pack()
+btn_stock_quit.pack(side="bottom")
 
 wn.mainloop()
