@@ -1,13 +1,22 @@
 from tkinter import *
 from fonctions import *
+from pathlib import Path
+import os
 import csv
+
+WINDOWS_SIZE = "1200x600"
+MANAGER_ID = ""
+MANAGER_PW = ""
+DATA_DIR_PATH = "./.db"
+SALER_DATA_PATH = "./.db/saler.csv"
+SALER_CSV_HEADER = "id,name,firstname,birthday,address,zip,login,pw"
 
 
 def cmd_quit():
     wn.destroy()
 
 def cmd_connect():
-    if (var_login.get() == "LeBoss" and var_pw.get() == "1234"):
+    if (var_login.get() == MANAGER_ID and var_pw.get() == MANAGER_PW):
         interface_connect.pack_forget()
         interface_manager.pack(pady=50)
     else:
@@ -33,13 +42,56 @@ def cmd_display_stock():
 def cmd_stock_quit():
     interface_stock.pack_forget()
     interface_saler.pack(pady=50)
+# Add saler
+def cmd_add_saler():
+    interface_manager.pack_forget()
+    interface_add_saler.pack(pady=30)
+
+def save_value_csv():
+    path = Path(SALER_DATA_PATH)
+    path_dir = Path(DATA_DIR_PATH)
+
+    if not path_dir.exists():
+        os.makedirs(DATA_DIR_PATH)
+    if not path.is_file():
+        f = open(SALER_DATA_PATH, 'x')
+    f = open(SALER_DATA_PATH, 'w')
+    data = csv.writer(f)
+
+    saler_data = [add_saler_id, add_saler_name, add_saler_firstname, add_saler_birthday,
+        add_saler_address, add_saler_zip, add_saler_login, add_saler_pw]
+
+    if not csv.reader(f) == SALER_CSV_HEADER:
+        data.writerow(SALER_CSV_HEADER.split(','))
+
+    data.writerow(saler_data)
+    f.close()
+
+def cmd_save_add_saler():
+    save_value_csv()
+    cmd_leave_quit_add_saler()
+
+
+def cmd_clean_add_saler():
+    add_saler_id.set("")
+    add_saler_name.set("")
+    add_saler_firstname.set("")
+    add_saler_birthday.set("")
+    add_saler_address.set("")
+    add_saler_zip.set("")
+    add_saler_login.set("")
+    add_saler_pw.set("")
+
+def cmd_leave_quit_add_saler():
+    interface_add_saler.pack_forget()
+    interface_manager.pack(pady=50)
 
 
 
 # // ----- // CREATION DE LA FENETRE // ----- //
 wn = Tk()
 wn.title("GesMag")
-wn.geometry("800x450")
+wn.geometry(WINDOWS_SIZE)
 wn.resizable(width=False, height=False)
 
 bg = PhotoImage(file="back.png")
@@ -50,6 +102,7 @@ label_bg.place(x=0, y=0)
 # // ----- // INTERFACE DE CONNEXION // ----- //
 # > --- creation des widgets --- <
 interface_connect = Frame(wn)
+interface_test = Frame(wn)
 #login
 var_login = StringVar()
 frame_login = Frame(interface_connect)
@@ -81,11 +134,11 @@ interface_connect.pack(pady=70)
 # // ----- // INTERFACE MANAGER // ----- //
 # > --- creation des widgets --- <
 interface_manager = Frame(wn)
-btn_manager_add = Button(interface_manager, width=20, text="ajouter un cassier")
+btn_manager_add = Button(interface_manager, width=20, text="ajouter un cassier", command=cmd_add_saler)
 btn_manager_display = Button(interface_manager, width=20, text="afficher la liste des cassier")
 btn_manager_delete = Button(interface_manager, width=20, text="supprimer un cassier")
 btn_manager_follow = Button(interface_manager, width=20, text="suivi de vente")
-btn_manager_saler_interface = Button(interface_manager, width=20, text="suivi de vente")
+btn_manager_saler_interface = Button(interface_manager, width=20, text="interface de caissier")
 btn_manager_disconnect = Button(interface_manager, width=20, text="deconexion", command=cmd_manager_disconnect)
 
 # > --- placement des widgets --- <
@@ -111,6 +164,69 @@ btn_saler_disconnect.pack(pady=20)
 btn_saler_stock.pack(pady=5)
 btn_saler_ticket.pack(pady=5)
 btn_saler_export.pack(pady=5)
+
+# > --- creation des widgets add saler --- <
+interface_add_saler = Frame(wn, bg="white")
+add_saler_id = StringVar()
+add_saler_name = StringVar()
+add_saler_firstname = StringVar()
+add_saler_birthday = StringVar()
+add_saler_address = StringVar()
+add_saler_zip = StringVar()
+add_saler_login = StringVar()
+add_saler_pw = StringVar()
+
+label_add_saler_id = Label(interface_add_saler, text="Identifiant (unique par caissier)", bg="white")
+label_add_saler_name = Label(interface_add_saler, text="Nom", bg="white")
+label_add_saler_firstname = Label(interface_add_saler, text="Prénom", bg="white")
+label_add_saler_birthday = Label(interface_add_saler, text="Date de naissance (AAAA/MM/JJ)", bg="white")
+label_add_saler_address = Label(interface_add_saler, text="Adresse", bg="white")
+label_add_saler_zip = Label(interface_add_saler, text="Code postal", bg="white")
+label_add_saler_login = Label(interface_add_saler, text="Login", bg="white")
+label_add_saler_pw = Label(interface_add_saler, text="Mot de passe", bg="white")
+
+entry_add_saler_id = Entry(interface_add_saler, textvariable=add_saler_id, width=20)
+entry_add_saler_name = Entry(interface_add_saler, textvariable=add_saler_name, width=20)
+entry_add_saler_firstname = Entry(interface_add_saler, textvariable=add_saler_firstname, width=20)
+entry_add_saler_birthday = Entry(interface_add_saler, textvariable=add_saler_birthday, width=20)
+entry_add_saler_address = Entry(interface_add_saler, textvariable=add_saler_address, width=20)
+entry_add_saler_zip = Entry(interface_add_saler, textvariable=add_saler_zip, width=20)
+entry_add_saler_login = Entry(interface_add_saler, textvariable=add_saler_login, width=20)
+entry_add_saler_pw = Entry(interface_add_saler, textvariable=add_saler_pw, width=20)
+
+btn_add_saler_save = Button(interface_add_saler, text="Enregistrer", command=cmd_save_add_saler, width=17)
+btn_add_saler_clean = Button(interface_add_saler, text="Vider", command=cmd_clean_add_saler, width=17)
+btn_add_saler_quit = Button(interface_add_saler, text="Quitter", command=cmd_leave_quit_add_saler, width=17)
+
+
+# > --- placement des widgets add_saler --- <
+label_add_saler_id.pack()
+entry_add_saler_id.pack()
+
+label_add_saler_name.pack()
+entry_add_saler_name.pack()
+
+label_add_saler_firstname.pack()
+entry_add_saler_firstname.pack()
+
+label_add_saler_birthday.pack()
+entry_add_saler_birthday.pack()
+
+label_add_saler_address.pack()
+entry_add_saler_address.pack()
+
+label_add_saler_zip.pack()
+entry_add_saler_zip.pack()
+
+label_add_saler_login.pack()
+entry_add_saler_login.pack()
+
+label_add_saler_pw.pack()
+entry_add_saler_pw.pack()
+
+btn_add_saler_save.pack()
+btn_add_saler_clean.pack()
+btn_add_saler_quit.pack()
 
 
 # // ----- // INTERFACE STOCK // ----- //
@@ -159,7 +275,7 @@ list_fonction = [
 ]
 interface_stock = Frame(wn)
 frame_btns = Frame(interface_stock)
-list_btn_stock = [] 
+list_btn_stock = []
 btn_stock_quit = Button(interface_stock, width=20, text="retour", command=cmd_stock_quit)
 for x in range(10):
     for y in range(4):
