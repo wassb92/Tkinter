@@ -1,6 +1,7 @@
 from tkinter import *
 from fonctions import *
 from pathlib import Path
+import tkinter.messagebox
 import os
 import csv
 
@@ -42,6 +43,7 @@ def cmd_display_stock():
 def cmd_stock_quit():
     interface_stock.pack_forget()
     interface_saler.pack(pady=50)
+
 # Add saler
 def cmd_add_saler():
     interface_manager.pack_forget()
@@ -55,22 +57,22 @@ def save_value_csv():
         os.makedirs(DATA_DIR_PATH)
     if not path.is_file():
         f = open(SALER_DATA_PATH, 'x')
-    f = open(SALER_DATA_PATH, 'w')
+    f = open(SALER_DATA_PATH, 'a')
     data = csv.writer(f)
 
-    saler_data = [add_saler_id, add_saler_name, add_saler_firstname, add_saler_birthday,
-        add_saler_address, add_saler_zip, add_saler_login, add_saler_pw]
-
-    if not csv.reader(f) == SALER_CSV_HEADER:
-        data.writerow(SALER_CSV_HEADER.split(','))
+    saler_data = [add_saler_id.get(), add_saler_name.get(), add_saler_firstname.get(), add_saler_birthday.get(),
+        add_saler_address.get(), add_saler_zip.get(), add_saler_login.get(), add_saler_pw.get()]
 
     data.writerow(saler_data)
+
     f.close()
 
 def cmd_save_add_saler():
+    onClick_successfull()
     save_value_csv()
-    cmd_leave_quit_add_saler()
 
+def onClick_successfull():
+    label_successfull.pack()
 
 def cmd_clean_add_saler():
     add_saler_id.set("")
@@ -84,6 +86,7 @@ def cmd_clean_add_saler():
 
 def cmd_leave_quit_add_saler():
     interface_add_saler.pack_forget()
+    label_successfull.pack_forget()
     interface_manager.pack(pady=50)
 
 
@@ -94,7 +97,7 @@ wn.title("GesMag")
 wn.geometry(WINDOWS_SIZE)
 wn.resizable(width=False, height=False)
 
-bg = PhotoImage(file="back.png")
+bg = PhotoImage(file="main_background.png")
 label_bg = Label(wn, image=bg)
 label_bg.place(x=0, y=0)
 
@@ -133,7 +136,7 @@ interface_connect.pack(pady=70)
 
 # // ----- // INTERFACE MANAGER // ----- //
 # > --- creation des widgets --- <
-interface_manager = Frame(wn)
+interface_manager = Frame(wn, bg="white")
 btn_manager_add = Button(interface_manager, width=20, text="ajouter un cassier", command=cmd_add_saler)
 btn_manager_display = Button(interface_manager, width=20, text="afficher la liste des cassier")
 btn_manager_delete = Button(interface_manager, width=20, text="supprimer un cassier")
@@ -184,6 +187,8 @@ label_add_saler_address = Label(interface_add_saler, text="Adresse", bg="white")
 label_add_saler_zip = Label(interface_add_saler, text="Code postal", bg="white")
 label_add_saler_login = Label(interface_add_saler, text="Login", bg="white")
 label_add_saler_pw = Label(interface_add_saler, text="Mot de passe", bg="white")
+
+label_successfull = Label(interface_add_saler, text="Vos données ont bien été sauvegardés !", bg="green")
 
 entry_add_saler_id = Entry(interface_add_saler, textvariable=add_saler_id, width=20)
 entry_add_saler_name = Entry(interface_add_saler, textvariable=add_saler_name, width=20)
