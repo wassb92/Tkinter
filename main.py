@@ -12,6 +12,18 @@ DATA_DIR_PATH = "./.db"
 SALER_DATA_PATH = "./.db/saler.csv"
 SALER_CSV_HEADER = "id,name,firstname,birthday,address,zip,login,pw"
 
+class Saler(object):
+    def __init__(self, id, name, firstname, birthday, address, zip, login, pw):
+        self.id = id
+        self.name = name
+        self.firstname = firstname
+        self.birthday = birthday
+        self.address = address
+        self.zip = zip
+        self.login = login
+        self.pw = pw
+
+saler = Saler("", "", "", "", "", "", "", "")
 
 def cmd_quit():
     wn.destroy()
@@ -23,6 +35,14 @@ def is_account_in_database(login, password):
     login_pw = 7
     for row in csv_file:
         if login == row[login_id] and password == row[login_pw]:
+            saler.id = row[0]
+            saler.name = row[1]
+            saler.firstname = row[2]
+            saler.birthday = row[3]
+            saler.address = row[4]
+            saler.zip = row[5]
+            saler.login = row[6]
+            saler.pw = row[7]
             return True
     return False
 
