@@ -5,6 +5,7 @@ import tkinter.messagebox
 import os
 import csv
 
+
 WINDOWS_SIZE = "1200x600"
 MANAGER_ID = ""
 MANAGER_PW = ""
@@ -48,6 +49,10 @@ def is_account_in_database(login, password):
 
 def cmd_connect():
     login_failure = Label(interface_connect, text="Vous avez entré un nom d'utilisateur ou un mot de passe invalide", bg="red")
+    interface_connect.pack_forget()
+    login_failure.pack_forget()
+    interface_manager.pack(pady=50)
+'''
     if (var_login.get() == MANAGER_ID and var_pw.get() == MANAGER_PW):
         interface_connect.pack_forget()
         login_failure.pack_forget()
@@ -58,7 +63,7 @@ def cmd_connect():
         interface_saler.pack(pady=50)
     else:
         login_failure.pack()
-
+'''
 def cmd_manager_disconnect():
     var_login.set("")
     var_pw.set("")
@@ -124,7 +129,59 @@ def cmd_leave_quit_add_saler():
     label_add_saler_successfull.pack_forget()
     interface_manager.pack(pady=50)
 
+# Display saler
+def cmd_display_saler():
+    interface_manager.pack_forget()
+    interface_display_saler.pack(pady=30)
 
+def find_saler_by_id():
+    saler_list = []
+    fopn = open(SALER_DATA_PATH, "r")
+    csv_file = csv.reader(fopn)
+    id = 0
+    for row in csv_file:
+        if display_saler_id.get() == row[id]:
+            saler_list = row
+    return saler_list
+
+def cmd_display_saler_by_id():
+    saler_list = find_saler_by_id()
+
+    if (display_saler_id.get() == "" or saler_list == []):
+        tkinter.messagebox.showinfo("Erreur !", "L'identifiant n'existe pas")
+        return
+    Label(interface_display_saler, text="Identifiant : " + saler_list[0] + "\t Nom : " + saler_list[1] + "\t Prénom : " + saler_list[2] + "\t Date de naissance : "
+        + saler_list[3] + "\t Adresse : " + saler_list[4] + "\t Code postal : " + saler_list[5] + "\t Login : " + saler_list[6] + "\t Mot de passe : " + saler_list[7], bg="white").pack()
+
+    Label(interface_display_saler, text="________________________________________________________________", bg="white").pack()
+
+def get_all_saler_datas():
+    with open(SALER_DATA_PATH) as csvfile:
+        data = list(csv.reader(csvfile))
+
+    return data
+
+def cmd_display_all_saler():
+    data = get_all_saler_datas()
+
+    with open(SALER_DATA_PATH) as csvfile:
+        row_count = sum(1 for row in csvfile)
+
+    for i in range(1, row_count):
+        Label(interface_display_saler, text="Identifiant : " + data[i][0] + "\t Nom : " + data[i][1] + "\t Prénom : " + data[i][2] + "\t Date de naissance : "
+            + data[i][3] + "\t Adresse : " + data[i][4] + "\t Code postal : " + data[i][5] + "\t Login : " + data[i][6] + "\t Mot de passe : " + data[i][7], bg="white").pack()
+        Label(interface_display_saler, text="________________________________________________________________", bg="white").pack()
+
+
+
+
+def cmd_clean_display_saler_id():
+    display_saler_id.set("")
+
+def cmd_quit_display_saler():
+    cmd_clean_display_saler_id()
+    interface_display_saler.pack_forget()
+    interface_manager.pack(pady=50)
 
 # // ----- // CREATION DE LA FENETRE // ----- //
 wn = Tk()
@@ -144,17 +201,17 @@ interface_test = Frame(wn)
 #login
 var_login = StringVar()
 frame_login = Frame(interface_connect)
-label_login = Label(frame_login, text="login")
+label_login = Label(frame_login, text="Login")
 entry_login = Entry(frame_login, width=40, textvariable=var_login)
 #pw
 var_pw = StringVar()
 frame_pw = Frame(interface_connect)
-label_pw = Label(frame_pw, text="mot de passe")
+label_pw = Label(frame_pw, text="Mot de passe")
 entry_pw = Entry(frame_pw, width=40, show="*", textvariable=var_pw)
 #boutons
 frame_buttons = Frame(interface_connect)
-btn_quit = Button(frame_buttons, text="quitter", command=cmd_quit, width=17)
-btn_connect = Button(frame_buttons, text="connexion", command=cmd_connect, width=17)
+btn_quit = Button(frame_buttons, text="Quitter", command=cmd_quit, width=17)
+btn_connect = Button(frame_buttons, text="Connexion", command=cmd_connect, width=17)
 
 # > --- placement des widgets --- <
 label_login.pack()
@@ -163,8 +220,8 @@ frame_login.pack(pady=5)
 label_pw.pack()
 entry_pw.pack()
 frame_pw.pack(pady=5)
-btn_quit.pack(side="left")
-btn_connect.pack(side="right")
+btn_quit.pack(side="right")
+btn_connect.pack(side="left")
 frame_buttons.pack(pady=5)
 interface_connect.pack(pady=70)
 
@@ -172,30 +229,29 @@ interface_connect.pack(pady=70)
 # // ----- // INTERFACE MANAGER // ----- //
 # > --- creation des widgets --- <
 interface_manager = Frame(wn, bg="white")
-btn_manager_add = Button(interface_manager, width=20, text="ajouter un cassier", command=cmd_add_saler)
-btn_manager_display = Button(interface_manager, width=20, text="afficher la liste des cassier")
-btn_manager_delete = Button(interface_manager, width=20, text="supprimer un cassier")
-btn_manager_follow = Button(interface_manager, width=20, text="suivi de vente")
-btn_manager_saler_interface = Button(interface_manager, width=20, text="interface de caissier")
-btn_manager_disconnect = Button(interface_manager, width=20, text="deconexion", command=cmd_manager_disconnect)
+btn_manager_add = Button(interface_manager, width=40, text="Ajouter un(e) cassier / cassière", command=cmd_add_saler)
+btn_manager_display = Button(interface_manager, width=40, text="Afficher la liste des cassiers / cassières", command=cmd_display_saler)
+btn_manager_delete = Button(interface_manager, width=40, text="Supprimer un cassiers / cassières")
+btn_manager_follow = Button(interface_manager, width=40, text="Suivi de vente")
+btn_manager_saler_interface = Button(interface_manager, width=40, text="Interface de cassiers / cassières")
+btn_manager_disconnect = Button(interface_manager, width=40, text="Déconnexion", command=cmd_manager_disconnect)
 
 # > --- placement des widgets --- <
-btn_manager_disconnect.pack(pady=20)
-btn_manager_add.pack(pady=5)
-btn_manager_display.pack(pady=5)
-btn_manager_display.pack(pady=5)
-btn_manager_delete.pack(pady=5)
-btn_manager_follow.pack(pady=5)
-btn_manager_saler_interface.pack(pady=5)
+btn_manager_add.pack(pady=8)
+btn_manager_display.pack(pady=8)
+btn_manager_delete.pack(pady=8)
+btn_manager_follow.pack(pady=8)
+btn_manager_saler_interface.pack(pady=8)
+btn_manager_disconnect.pack(pady=8)
 
 
-# // ----- // INTERFACE CASSIER // ----- //
+# // ----- // INTERFACE CAISSIER // ----- //
 # > --- creation des widgets --- <
 interface_saler = Frame(wn)
-btn_saler_disconnect = Button(interface_saler, width=20, text="deconexion", command=cmd_saler_disconnect)
-btn_saler_stock = Button(interface_saler, width=20, text="afficher le stock", command=cmd_display_stock)
-btn_saler_ticket = Button(interface_saler, width=20, text="ticket de caisse")
-btn_saler_export = Button(interface_saler, width=20, text="export statistique")
+btn_saler_disconnect = Button(interface_saler, width=20, text="Déconnexion", command=cmd_saler_disconnect)
+btn_saler_stock = Button(interface_saler, width=20, text="Afficher le stock", command=cmd_display_stock)
+btn_saler_ticket = Button(interface_saler, width=20, text="Ticket de caisse")
+btn_saler_export = Button(interface_saler, width=20, text="Export statistique")
 
 # > --- placement des widgets --- <
 btn_saler_disconnect.pack(pady=20)
@@ -264,9 +320,37 @@ entry_add_saler_login.pack()
 label_add_saler_pw.pack()
 entry_add_saler_pw.pack()
 
-btn_add_saler_save.pack()
+btn_add_saler_save.pack(pady=8)
 btn_add_saler_clean.pack()
 btn_add_saler_quit.pack()
+
+
+# Bouton Afficher Tous : Permet d’afficher tous les caissiers enregistrés sous forme de tableau.
+# Un bouton Vider : permet de vider toutes les zones de saisie
+# Un bouton Quitter : permet de quitter l’interface d’Affichage caissier
+
+# > --- creation des widgets display saler --- <
+interface_display_saler = Frame(wn, bg="white")
+display_saler_id = StringVar()
+
+label_display_saler_id = Label(interface_display_saler, text="Identifiant", bg="white")
+
+entry_display_saler_id = Entry(interface_display_saler, textvariable=display_saler_id, width=20)
+
+btn_display_saler_by_id = Button(interface_display_saler, text="Afficher", width=17, command=cmd_display_saler_by_id)
+btn_display_saler = Button(interface_display_saler, text="Afficher Tous", width=17, command=cmd_display_all_saler)
+btn_display_saler_clean = Button(interface_display_saler, text="Vider", width=17, command=cmd_clean_display_saler_id)
+btn_display_saler_quit = Button(interface_display_saler, text="Quitter", width=17, command=cmd_quit_display_saler)
+
+
+# > --- placement des widgets display_saler --- <
+label_display_saler_id.pack()
+entry_display_saler_id.pack()
+
+btn_display_saler_by_id.pack()
+btn_display_saler.pack()
+btn_display_saler_clean.pack()
+btn_display_saler_quit.pack()
 
 
 # // ----- // INTERFACE STOCK // ----- //
