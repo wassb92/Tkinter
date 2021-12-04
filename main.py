@@ -16,13 +16,28 @@ SALER_CSV_HEADER = "id,name,firstname,birthday,address,zip,login,pw"
 def cmd_quit():
     wn.destroy()
 
+def is_account_in_database(login, password):
+    fopn = open(SALER_DATA_PATH, "r")
+    csv_file = csv.reader(fopn)
+    login_id = 6
+    login_pw = 7
+    for row in csv_file:
+        if login == row[login_id] and password == row[login_pw]:
+            return True
+    return False
+
 def cmd_connect():
+    login_failure = Label(interface_connect, text="Vous avez entré un nom d'utilisateur ou un mot de passe invalide", bg="red")
     if (var_login.get() == MANAGER_ID and var_pw.get() == MANAGER_PW):
         interface_connect.pack_forget()
+        login_failure.pack_forget()
         interface_manager.pack(pady=50)
-    else:
+    elif (is_account_in_database(var_login.get(), var_pw.get())):
         interface_connect.pack_forget()
+        login_failure.pack_forget()
         interface_saler.pack(pady=50)
+    else:
+        login_failure.pack()
 
 def cmd_manager_disconnect():
     var_login.set("")
@@ -72,7 +87,7 @@ def cmd_save_add_saler():
     save_value_csv()
 
 def onClick_successfull():
-    label_successfull.pack()
+    label_add_saler_successfull.pack()
 
 def cmd_clean_add_saler():
     add_saler_id.set("")
@@ -86,7 +101,7 @@ def cmd_clean_add_saler():
 
 def cmd_leave_quit_add_saler():
     interface_add_saler.pack_forget()
-    label_successfull.pack_forget()
+    label_add_saler_successfull.pack_forget()
     interface_manager.pack(pady=50)
 
 
@@ -188,7 +203,7 @@ label_add_saler_zip = Label(interface_add_saler, text="Code postal", bg="white")
 label_add_saler_login = Label(interface_add_saler, text="Login", bg="white")
 label_add_saler_pw = Label(interface_add_saler, text="Mot de passe", bg="white")
 
-label_successfull = Label(interface_add_saler, text="Vos données ont bien été sauvegardés !", bg="green")
+label_add_saler_successfull = Label(interface_add_saler, text="Vos données ont bien été sauvegardés !", bg="green")
 
 entry_add_saler_id = Entry(interface_add_saler, textvariable=add_saler_id, width=20)
 entry_add_saler_name = Entry(interface_add_saler, textvariable=add_saler_name, width=20)
