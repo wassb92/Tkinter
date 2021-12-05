@@ -10,7 +10,7 @@ WINDOWS_SIZE = "1600x800"
 MANAGER_ID = ""
 MANAGER_PW = ""
 DATA_DIR_PATH = "./.db"
-SALER_DATA_PATH = "./.db/saler.csv"
+SALER_DATA_PATH = DATA_DIR_PATH + "/saler.csv"
 SALER_CSV_HEADER = "id,name,firstname,birthday,address,zip,login,pw"
 
 class Saler(object):
@@ -25,6 +25,20 @@ class Saler(object):
         self.pw = pw
 
 saler = Saler("", "", "", "", "", "", "", "")
+
+def create_empty_database():
+    path = Path(SALER_DATA_PATH)
+    path_dir = Path(DATA_DIR_PATH)
+
+
+    if not path_dir.exists():
+        os.makedirs(DATA_DIR_PATH)
+    if not path.exists():
+        f = open(SALER_DATA_PATH, 'x')
+        header = csv.writer(f)
+        header.writerow(SALER_CSV_HEADER.split(','))
+        f.close()
+
 
 def cmd_quit():
     wn.destroy()
@@ -86,13 +100,6 @@ def cmd_add_saler():
     interface_add_saler.pack(pady=30)
 
 def save_value_csv():
-    path = Path(SALER_DATA_PATH)
-    path_dir = Path(DATA_DIR_PATH)
-
-    if not path_dir.exists():
-        os.makedirs(DATA_DIR_PATH)
-    if not path.is_file():
-        f = open(SALER_DATA_PATH, 'x')
     f = open(SALER_DATA_PATH, 'a')
     data = csv.writer(f)
 
@@ -244,6 +251,7 @@ def cmd_saler_connect():
 
 # // ----- // CREATION DE LA FENETRE // ----- //
 wn = Tk()
+create_empty_database()
 wn.title("GesMag")
 wn.geometry(WINDOWS_SIZE)
 wn.resizable(width=False, height=False)
