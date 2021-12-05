@@ -1,7 +1,6 @@
 from tkinter import *
 from fonctions import *
 from pathlib import Path
-import pandas as pd
 import tkinter.messagebox
 import os
 import csv
@@ -60,10 +59,6 @@ def cmd_connect():
         interface_saler.pack(pady=50)
     else:
         login_failure.pack()
-
-def cmd_saler_connect():
-    interface_manager.pack_forget()
-    interface_saler.pack(pady=50)
 
 def cmd_manager_disconnect():
     var_login.set("")
@@ -229,6 +224,22 @@ def cmd_quit_delete_saler():
     interface_delete_saler.pack_forget()
     interface_manager.pack(pady=50)
 
+# sales follow-up
+def cmd_sales_follow_up():
+    interface_manager.pack_forget()
+    interface_sales_follow_up.pack()
+
+def cmd_quit_sales_follow_up():
+    interface_sales_follow_up.pack_forget()
+    interface_manager.pack()
+
+
+# connect from manager to saler
+
+def cmd_saler_connect():
+    interface_manager.pack_forget()
+    interface_saler.pack(pady=50)
+
 
 
 # // ----- // CREATION DE LA FENETRE // ----- //
@@ -280,7 +291,7 @@ interface_manager = Frame(wn, bg="white")
 btn_manager_add = Button(interface_manager, width=40, text="Ajouter un(e) cassier / cassière", command=cmd_add_saler)
 btn_manager_display = Button(interface_manager, width=40, text="Afficher la liste des cassiers / cassières", command=cmd_display_saler)
 btn_manager_delete = Button(interface_manager, width=40, text="Supprimer un cassiers / cassières", command=cmd_delete_saler)
-btn_manager_follow = Button(interface_manager, width=40, text="Suivi de vente")
+btn_manager_follow = Button(interface_manager, width=40, text="Suivi de vente", command=cmd_sales_follow_up)
 btn_manager_saler_interface = Button(interface_manager, width=40, text="Interface de cassiers / cassières", command=cmd_saler_connect)
 btn_manager_disconnect = Button(interface_manager, width=40, text="Déconnexion", command=cmd_manager_disconnect)
 
@@ -419,6 +430,17 @@ btn_delete_saler_by_id.pack()
 btn_delete_saler_clean.pack()
 btn_delete_saler_quit.pack()
 
+
+
+# > --- creation des widgets sales_follow_up --- <
+interface_sales_follow_up = Frame(wn, bg="white")
+label_sales_follow_up = Label(interface_sales_follow_up, text="Suivi de vente", bg="white")
+btn_delete_sales_follow_up = Button(interface_sales_follow_up, text="Quitter", width=17, command=cmd_quit_sales_follow_up)
+
+
+# > --- placement des widgets sales_follow_up --- <
+label_sales_follow_up.pack()
+btn_delete_sales_follow_up.pack()
 
 
 # // ----- // INTERFACE STOCK // ----- //
