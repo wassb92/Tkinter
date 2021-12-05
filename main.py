@@ -291,6 +291,9 @@ def cmd_save_add_saler():
         label_add_saler_successfull.pack()
         save_value_csv()
 
+def onClick_successfull():
+    label_add_saler_successfull.pack()
+
 def cmd_clean_add_saler():
     add_saler_id.set("")
     add_saler_name.set("")
