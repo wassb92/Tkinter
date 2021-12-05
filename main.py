@@ -8,9 +8,9 @@ import os
 import csv
 
 
-WINDOWS_SIZE = "1600x800"
 MANAGER_ID = ""
 MANAGER_PW = ""
+WINDOWS_SIZE = "1600x800"
 DATA_DIR_PATH = "./.db"
 SALER_DATA_PATH = "./.db/saler.csv"
 SALER_DATA_PATH = DATA_DIR_PATH + "/saler.csv"
@@ -285,7 +285,6 @@ def error_add_saler():
         tkinter.messagebox.showerror("Error !", "mot de passe invalide: un mot de passe de 8 caractères minimum dont 1 caractère spécial, une lettre majuscule et une lettre minuscule")
         return (False)
     return (True)
-
 def cmd_save_add_saler():
     if (error_add_saler()):
         label_add_saler_successfull.pack()
@@ -303,8 +302,8 @@ def cmd_clean_add_saler():
     add_saler_pw.set("")
 
 def cmd_leave_quit_add_saler():
-    interface_add_saler.pack_forget()
     label_add_saler_successfull.pack_forget()
+    interface_add_saler.pack_forget()
     interface_manager.pack(pady=50)
 
 # Display saler
@@ -815,131 +814,6 @@ btn_stat_quit = Button(interface_stat, width=20, text="retour", command=cmd_stat
 
 # > --- placement des widgets --- <
 btn_stat_quit.pack(side="bottom", pady=8)
-# > --- creation des widgets add saler --- <
-interface_add_saler = Frame(wn, bg="white")
-add_saler_id = StringVar()
-add_saler_name = StringVar()
-add_saler_firstname = StringVar()
-add_saler_birthday = StringVar()
-add_saler_address = StringVar()
-add_saler_zip = StringVar()
-add_saler_login = StringVar()
-add_saler_pw = StringVar()
-
-label_add_saler_id = Label(interface_add_saler, text="Identifiant (unique par caissier)", bg="white")
-label_add_saler_name = Label(interface_add_saler, text="Nom", bg="white")
-label_add_saler_firstname = Label(interface_add_saler, text="Prénom", bg="white")
-label_add_saler_birthday = Label(interface_add_saler, text="Date de naissance (AAAA/MM/JJ)", bg="white")
-label_add_saler_address = Label(interface_add_saler, text="Adresse", bg="white")
-label_add_saler_zip = Label(interface_add_saler, text="Code postal", bg="white")
-label_add_saler_login = Label(interface_add_saler, text="Login", bg="white")
-label_add_saler_pw = Label(interface_add_saler, text="Mot de passe", bg="white")
-
-entry_add_saler_id = Entry(interface_add_saler, textvariable=add_saler_id, width=20)
-entry_add_saler_name = Entry(interface_add_saler, textvariable=add_saler_name, width=20)
-entry_add_saler_firstname = Entry(interface_add_saler, textvariable=add_saler_firstname, width=20)
-entry_add_saler_birthday = Entry(interface_add_saler, textvariable=add_saler_birthday, width=20)
-entry_add_saler_address = Entry(interface_add_saler, textvariable=add_saler_address, width=20)
-entry_add_saler_zip = Entry(interface_add_saler, textvariable=add_saler_zip, width=20)
-entry_add_saler_login = Entry(interface_add_saler, textvariable=add_saler_login, width=20)
-entry_add_saler_pw = Entry(interface_add_saler, textvariable=add_saler_pw, width=20)
-
-btn_add_saler_save = Button(interface_add_saler, text="Enregistrer", command=cmd_save_add_saler, width=17)
-btn_add_saler_clean = Button(interface_add_saler, text="Vider", command=cmd_clean_add_saler, width=17)
-btn_add_saler_quit = Button(interface_add_saler, text="Quitter", command=cmd_leave_quit_add_saler, width=17)
-
-
-# > --- placement des widgets add_saler --- <
-label_add_saler_id.pack()
-entry_add_saler_id.pack()
-
-label_add_saler_name.pack()
-entry_add_saler_name.pack()
-
-label_add_saler_firstname.pack()
-entry_add_saler_firstname.pack()
-
-label_add_saler_birthday.pack()
-entry_add_saler_birthday.pack()
-
-label_add_saler_address.pack()
-entry_add_saler_address.pack()
-
-label_add_saler_zip.pack()
-entry_add_saler_zip.pack()
-
-label_add_saler_login.pack()
-entry_add_saler_login.pack()
-
-label_add_saler_pw.pack()
-entry_add_saler_pw.pack()
-
-btn_add_saler_save.pack()
-btn_add_saler_clean.pack()
-btn_add_saler_quit.pack()
-
-# > --- creation des widgets add saler --- <
-interface_add_saler = Frame(wn, bg="white")
-add_saler_id = StringVar()
-add_saler_name = StringVar()
-add_saler_firstname = StringVar()
-add_saler_birthday = StringVar()
-add_saler_address = StringVar()
-add_saler_zip = StringVar()
-add_saler_login = StringVar()
-add_saler_pw = StringVar()
-
-label_add_saler_id = Label(interface_add_saler, text="Identifiant (unique par caissier)", bg="white")
-label_add_saler_name = Label(interface_add_saler, text="Nom", bg="white")
-label_add_saler_firstname = Label(interface_add_saler, text="Prénom", bg="white")
-label_add_saler_birthday = Label(interface_add_saler, text="Date de naissance (AAAA/MM/JJ)", bg="white")
-label_add_saler_address = Label(interface_add_saler, text="Adresse", bg="white")
-label_add_saler_zip = Label(interface_add_saler, text="Code postal", bg="white")
-label_add_saler_login = Label(interface_add_saler, text="Login", bg="white")
-label_add_saler_pw = Label(interface_add_saler, text="Mot de passe", bg="white")
-
-entry_add_saler_id = Entry(interface_add_saler, textvariable=add_saler_id, width=20)
-entry_add_saler_name = Entry(interface_add_saler, textvariable=add_saler_name, width=20)
-entry_add_saler_firstname = Entry(interface_add_saler, textvariable=add_saler_firstname, width=20)
-entry_add_saler_birthday = Entry(interface_add_saler, textvariable=add_saler_birthday, width=20)
-entry_add_saler_address = Entry(interface_add_saler, textvariable=add_saler_address, width=20)
-entry_add_saler_zip = Entry(interface_add_saler, textvariable=add_saler_zip, width=20)
-entry_add_saler_login = Entry(interface_add_saler, textvariable=add_saler_login, width=20)
-entry_add_saler_pw = Entry(interface_add_saler, textvariable=add_saler_pw, width=20)
-
-btn_add_saler_save = Button(interface_add_saler, text="Enregistrer", command=cmd_save_add_saler, width=17)
-btn_add_saler_clean = Button(interface_add_saler, text="Vider", command=cmd_clean_add_saler, width=17)
-btn_add_saler_quit = Button(interface_add_saler, text="Quitter", command=cmd_leave_quit_add_saler, width=17)
-
-
-# > --- placement des widgets add_saler --- <
-label_add_saler_id.pack()
-entry_add_saler_id.pack()
-
-label_add_saler_name.pack()
-entry_add_saler_name.pack()
-
-label_add_saler_firstname.pack()
-entry_add_saler_firstname.pack()
-
-label_add_saler_birthday.pack()
-entry_add_saler_birthday.pack()
-
-label_add_saler_address.pack()
-entry_add_saler_address.pack()
-
-label_add_saler_zip.pack()
-entry_add_saler_zip.pack()
-
-label_add_saler_login.pack()
-entry_add_saler_login.pack()
-
-label_add_saler_pw.pack()
-entry_add_saler_pw.pack()
-
-btn_add_saler_save.pack()
-btn_add_saler_clean.pack()
-btn_add_saler_quit.pack()
 
 
 wn.mainloop()
