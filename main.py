@@ -50,10 +50,6 @@ def is_account_in_database(login, password):
 
 def cmd_connect():
     login_failure = Label(interface_connect, text="Vous avez entré un nom d'utilisateur ou un mot de passe invalide", bg="red")
-    interface_connect.pack_forget()
-    login_failure.pack_forget()
-    interface_manager.pack(pady=50)
-'''
     if (var_login.get() == MANAGER_ID and var_pw.get() == MANAGER_PW):
         interface_connect.pack_forget()
         login_failure.pack_forget()
@@ -64,7 +60,11 @@ def cmd_connect():
         interface_saler.pack(pady=50)
     else:
         login_failure.pack()
-'''
+
+def cmd_saler_connect():
+    interface_manager.pack_forget()
+    interface_saler.pack(pady=50)
+
 def cmd_manager_disconnect():
     var_login.set("")
     var_pw.set("")
@@ -281,7 +281,7 @@ btn_manager_add = Button(interface_manager, width=40, text="Ajouter un(e) cassie
 btn_manager_display = Button(interface_manager, width=40, text="Afficher la liste des cassiers / cassières", command=cmd_display_saler)
 btn_manager_delete = Button(interface_manager, width=40, text="Supprimer un cassiers / cassières", command=cmd_delete_saler)
 btn_manager_follow = Button(interface_manager, width=40, text="Suivi de vente")
-btn_manager_saler_interface = Button(interface_manager, width=40, text="Interface de cassiers / cassières")
+btn_manager_saler_interface = Button(interface_manager, width=40, text="Interface de cassiers / cassières", command=cmd_saler_connect)
 btn_manager_disconnect = Button(interface_manager, width=40, text="Déconnexion", command=cmd_manager_disconnect)
 
 # > --- placement des widgets --- <
