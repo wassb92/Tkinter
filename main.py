@@ -80,17 +80,14 @@ def is_account_in_database(login, password):
     return False
 
 def cmd_connect():
-    login_failure = Label(interface_connect, text="Vous avez entré un nom d'utilisateur ou un mot de passe invalide", bg="red")
     if (var_login.get() == MANAGER_ID and var_pw.get() == MANAGER_PW):
         interface_connect.pack_forget()
-        login_failure.pack_forget()
         interface_manager.pack(pady=50)
     elif (is_account_in_database(var_login.get(), var_pw.get())):
         interface_connect.pack_forget()
-        login_failure.pack_forget()
         interface_saler.pack(pady=50)
     else:
-        login_failure.pack()
+        tkinter.messagebox.showerror("Error !", "Vous avez entré un nom d'utilisateur ou un mot de passe invalide")
 
 def cmd_manager_disconnect():
     var_login.set("")
