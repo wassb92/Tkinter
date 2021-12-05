@@ -4,6 +4,8 @@ from datetime import datetime
 from time import gmtime, strftime
 from pathlib import Path
 import tkinter.messagebox
+# from tkinter import *
+# from tkinter.ttk import *
 import os
 import csv
 
@@ -13,7 +15,12 @@ MANAGER_ID = ""
 MANAGER_PW = ""
 DATA_DIR_PATH = "./.db"
 SALER_DATA_PATH = "./.db/saler.csv"
+SALER_DATA_PATH = DATA_DIR_PATH + "/saler.csv"
+STOCK_DATA_PATH = DATA_DIR_PATH + "/stock.csv"
+TICKET_DATA_PATH = DATA_DIR_PATH + "/ticket.csv"
 SALER_CSV_HEADER = "id,name,firstname,birthday,address,zip,login,pw"
+STOCK_CSV_HEADER = "img,id,nom,n,prix"
+TICKET_CSV_HEADER = "date,prix"
 
 class Saler(object):
     def __init__(self, id, name, firstname, birthday, address, zip, login, pw):
@@ -27,6 +34,31 @@ class Saler(object):
         self.pw = pw
 
 saler = Saler("", "", "", "", "", "", "", "")
+
+def create_empty_database():
+    path_dir = Path(DATA_DIR_PATH)
+    path_saler = Path(SALER_DATA_PATH)
+    path_stock = Path(STOCK_DATA_PATH)
+    path_ticket = Path(TICKET_DATA_PATH)
+
+    if not path_dir.exists():
+        os.makedirs(DATA_DIR_PATH)
+    if not path_saler.exists():
+        f = open(SALER_DATA_PATH, 'x')
+        header = csv.writer(f)
+        header.writerow(SALER_CSV_HEADER.split(','))
+        f.close()
+    if not path_stock.exists():
+        f = open(STOCK_DATA_PATH, 'x')
+        header = csv.writer(f)
+        header.writerow(STOCK_CSV_HEADER.split(','))
+        f.close()
+    if not path_ticket.exists():
+        f = open(TICKET_DATA_PATH, 'x')
+        header = csv.writer(f)
+        header.writerow(TICKET_CSV_HEADER.split(','))
+        f.close()
+
 
 def cmd_quit():
     wn.destroy()
@@ -410,10 +442,10 @@ btn_saler_ticket = Button(interface_saler, width=20, text="Ticket de caisse", co
 btn_saler_export = Button(interface_saler, width=20, text="Export statistique", command=cmd_interface_stat)
 
 # > --- placement des widgets --- <
-btn_saler_disconnect.pack(pady=20)
 btn_saler_stock.pack(pady=5)
 btn_saler_ticket.pack(pady=5)
 btn_saler_export.pack(pady=5)
+btn_saler_disconnect.pack(pady=20)
 
 # > --- creation des widgets add saler --- <
 interface_add_saler = Frame(wn, bg="white")
@@ -584,13 +616,103 @@ list_fonction = [
     cmd_btn_stock_38,
     cmd_btn_stock_39
 ]
+
+list_img1 = [
+    "pomme"
+    "poire"
+    "annanas"
+    "abricot"
+    "concombre"
+    "courgette"
+    "mangue"
+    "radis"
+    "navet"
+    "carotte"
+    "baguette"
+    "pain_au_chocolat"
+    "croissant"
+    "vienoise"
+    "vienoise_au_chocolat"
+    "pain_au_raisins"
+    "muffin"
+    "paris-brest"
+    "éclair_au_chocolat"
+    "éclair_au_café"
+    "steak_haché"
+    "steak"
+    "saumon"
+    "cabillo"
+    "sole"
+    "saucisse"
+    "poulet"
+    "bar"
+    "riette"
+    "caille"
+    "balai"
+    "balaillette"
+    "pelle"
+    "serviette"
+    "detergent"
+    "eponge"
+    "gants"
+    "torchon"
+    "produit_à_vitre"
+    "savon"
+]
+
+list_img = [
+    "pomme"
+    "poire"
+    "annanas"
+    "abricot"
+    "concombre"
+    "courgette"
+    "mangue"
+    "radis"
+    "navet"
+    "carotte"
+    "baguette"
+    "pain_au_chocolat"
+    "croissant"
+    "vienoise"
+    "vienoise_au_chocolat"
+    "pain_au_raisins"
+    "muffin"
+    "paris-brest"
+    "éclair_au_chocolat"
+    "éclair_au_café"
+    "steak_haché"
+    "steak"
+    "saumon"
+    "cabillo"
+    "sole"
+    "saucisse"
+    "poulet"
+    "bar"
+    "riette"
+    "caille"
+    "balai"
+    "balaillette"
+    "pelle"
+    "serviette"
+    "detergent"
+    "eponge"
+    "gants"
+    "torchon"
+    "produit_à_vitre"
+    "savon"
+]
+
+
+img= PhotoImage(file="assets/pomme.png")
+
 interface_stock = Frame(wn)
 frame_btns = Frame(interface_stock)
 list_btn_stock = []
 btn_stock_quit = Button(interface_stock, width=20, text="retour", command=cmd_stock_quit)
 for x in range(10):
     for y in range(4):
-        new_btn = Button(frame_btns, width=1, height=1, command=list_fonction[x+y*10])
+        new_btn = Button(frame_btns, command=list_fonction[x+y*10], image=img)
         new_btn.grid(column=x, row=y)
         list_btn_stock.append(new_btn)
 
