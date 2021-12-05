@@ -219,8 +219,8 @@ def save_value_csv():
     f = open(SALER_DATA_PATH, 'w')
     data = csv.writer(f)
 
-    saler_data = [add_saler_id, add_saler_name, add_saler_firstname, add_saler_birthday,
-        add_saler_address, add_saler_zip, add_saler_login, add_saler_pw]
+    saler_data = [add_saler_id.get(), add_saler_name.get(), add_saler_firstname.get(), add_saler_birthday.get(),
+        add_saler_address.get(), add_saler_zip.get(), add_saler_login.get(), add_saler_pw.get()]
 
     if not csv.reader(f) == SALER_CSV_HEADER:
         data.writerow(SALER_CSV_HEADER.split(','))
@@ -228,9 +228,68 @@ def save_value_csv():
     data.writerow(saler_data)
     f.close()
 
+def error_add_saler():
+    if (add_saler_login.get().__len__() == 0 or add_saler_address.get().__len__() == 0 or add_saler_birthday.get().__len__() == 0 or
+        add_saler_firstname.get().__len__() == 0 or add_saler_id.get().__len__() == 0 or add_saler_zip.get().__len__() == 0 or
+        add_saler_name.get().__len__() == 0 or add_saler_pw.get().__len__() == 0):
+            tkinter.messagebox.showerror("Error !", "Tous les champs doivent être remplis")
+            return (False)
+    with open('.db/saler.csv', 'r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        next(csv_reader)
+        for line in csv_reader:
+            if (line[0] == add_saler_id.get()):
+                tkinter.messagebox.showerror("Error !", "ID invalid: cet ID existe déjà")
+                return (False)
+    date = add_saler_birthday.get()
+    if date.__len__() != 10:
+        tkinter.messagebox.showerror("Error !", "Date de naissance invalide: format invalide (AAAA/MM/JJ) taille")
+        return (False)
+    for i in range(date.__len__()):
+        if (i == 4 or i == 7):
+            if (date[i] != '/'):
+                tkinter.messagebox.showerror("Error !", "Date de naissance invalide: format invalide (AAAA/MM/JJ) slash")
+                return (False)
+        else:
+            if (date[i] < '0' or date[i] > '9'):
+                tkinter.messagebox.showerror("Error !", "Date de naissance invalide: format invalide (AAAA/MM/JJ) nb")
+                return (False)
+    code = add_saler_zip.get()
+    if code.__len__() != 5:
+        tkinter.messagebox.showerror("Error !", "code postal invalide (5 chiffres)")
+        return (False)
+    for i in range(code.__len__()):
+        if (code[i] < '0' or code[i] > '9'):
+            tkinter.messagebox.showerror("Error !", "code postal invalide (5 chiffres)")
+            return (False)
+    login = add_saler_login.get()
+    for i in range(login.__len__()):
+        if (login[i] < '0' or login[i] > '9') and (login[i] < 'A' or login[i] > 'Z') and (login[i] < 'a' or login[i] > 'z'):
+            tkinter.messagebox.showerror("Error !", "login ivalide: le login ne doit contenir que des lettres et des chiffres")
+            return (False)
+    pw = add_saler_pw.get()
+    maj = False
+    min = False
+    special = False
+    if pw.__len__() < 8:
+        tkinter.messagebox.showerror("Error !", "mot de passe invalide: un mot de passe de 8 caractères minimum dont 1 caractère spécial, une lettre majuscule et une lettre minuscule")
+        return (False)
+    for i in range(pw.__len__()):
+        if (pw[i] >= 'a' and pw[i] <= 'z'):
+            min = True
+        elif (pw[i] >= 'A' and pw[i] <= 'Z'):
+            maj = True
+        else:
+            special = True
+    if (min == False or maj == False or special == False):
+        tkinter.messagebox.showerror("Error !", "mot de passe invalide: un mot de passe de 8 caractères minimum dont 1 caractère spécial, une lettre majuscule et une lettre minuscule")
+        return (False)
+    return (True)
+
 def cmd_save_add_saler():
-    save_value_csv()
-    cmd_leave_quit_add_saler()
+    if (error_add_saler()):
+        label_add_saler_successfull.pack()
+        save_value_csv()
 
 
 def cmd_clean_add_saler():
@@ -379,7 +438,6 @@ label_bg.place(x=0, y=0)
 # // ----- // INTERFACE DE CONNEXION // ----- //
 # > --- creation des widgets --- <
 interface_connect = Frame(wn)
-interface_test = Frame(wn)
 #login
 var_login = StringVar()
 frame_login = Frame(interface_connect)
