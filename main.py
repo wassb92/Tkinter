@@ -30,7 +30,6 @@ def create_empty_database():
     path = Path(SALER_DATA_PATH)
     path_dir = Path(DATA_DIR_PATH)
 
-
     if not path_dir.exists():
         os.makedirs(DATA_DIR_PATH)
     if not path.exists():
@@ -62,17 +61,14 @@ def is_account_in_database(login, password):
     return False
 
 def cmd_connect():
-    login_failure = Label(interface_connect, text="Vous avez entré un nom d'utilisateur ou un mot de passe invalide", bg="red")
     if (var_login.get() == MANAGER_ID and var_pw.get() == MANAGER_PW):
         interface_connect.pack_forget()
-        login_failure.pack_forget()
         interface_manager.pack(pady=50)
     elif (is_account_in_database(var_login.get(), var_pw.get())):
         interface_connect.pack_forget()
-        login_failure.pack_forget()
         interface_saler.pack(pady=50)
     else:
-        login_failure.pack()
+        tkinter.messagebox.showerror("Erreur !", "Vous avez entré un nom d'utilisateur ou un mot de passe invalide")
 
 def cmd_manager_disconnect():
     var_login.set("")
@@ -151,7 +147,7 @@ def cmd_display_saler_by_id():
     saler_list = find_saler_by_id()
 
     if (display_saler_id.get() == "" or saler_list == []):
-        tkinter.messagebox.showinfo("Erreur !", "L'identifiant n'existe pas")
+        tkinter.messagebox.showerror("Erreur !", "L'identifiant n'existe pas")
         return
     Label(interface_display_saler, text="Identifiant : " + saler_list[0] + "\t Nom : " + saler_list[1] + "\t Prénom : " + saler_list[2] + "\t Date de naissance : "
         + saler_list[3] + "\t Adresse : " + saler_list[4] + "\t Code postal : " + saler_list[5] + "\t Login : " + saler_list[6] + "\t Mot de passe : " + saler_list[7], bg="white").pack()
@@ -203,7 +199,7 @@ def delete_row():
     if (id_exist):
         tkinter.messagebox.showinfo("Succès", "Suppression avec succès")
     else:
-        tkinter.messagebox.showinfo("Erreur !", "L'identifiant n'existe pas")
+        tkinter.messagebox.showerror("Erreur !", "L'identifiant n'existe pas")
     return new_saler_data
 
 def write_new_csv_saler():
