@@ -198,7 +198,6 @@ def cmd_interface_stat():
                 add_price_to_day(list_day, line[0], line[1])
             else:
                 list_day.append((line[0], line[1]))
-    print(list_day)
     for day in list_day:
         a, b = day
         new_label = Label(interface_stat, text=a+"   -   "+str(b)+"€")
