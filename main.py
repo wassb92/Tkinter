@@ -661,50 +661,51 @@ list_img1 = [
 ]
 
 list_img = [
-    "pomme"
-    "poire"
-    "annanas"
-    "abricot"
-    "concombre"
-    "courgette"
-    "mangue"
-    "radis"
-    "navet"
-    "carotte"
-    "baguette"
-    "pain_au_chocolat"
-    "croissant"
-    "vienoise"
-    "vienoise_au_chocolat"
-    "pain_au_raisins"
-    "muffin"
-    "paris-brest"
-    "éclair_au_chocolat"
-    "éclair_au_café"
-    "steak_haché"
-    "steak"
-    "saumon"
-    "cabillo"
-    "sole"
-    "saucisse"
-    "poulet"
-    "bar"
-    "riette"
-    "caille"
-    "balai"
-    "balaillette"
-    "pelle"
-    "serviette"
-    "detergent"
-    "eponge"
-    "gants"
-    "torchon"
-    "produit_à_vitre"
+    "pomme",
+    "poire",
+    "annanas",
+    "abricot",
+    "concombre",
+    "courgette",
+    "mangue",
+    "radis",
+    "navet",
+    "carotte",
+    "baguette",
+    "pain_au_chocolat",
+    "croissant",
+    "vienoise",
+    "vienoise_au_chocolat",
+    "pain_au_raisins",
+    "muffin",
+    "paris-brest",
+    "éclair_au_chocolat",
+    "éclair_au_café",
+    "steak_haché",
+    "steak",
+    "saumon",
+    "cabillo",
+    "sole",
+    "saucisse",
+    "poulet",
+    "bar",
+    "riette",
+    "caille",
+    "balai",
+    "balaillette",
+    "pelle",
+    "serviette",
+    "detergent",
+    "eponge",
+    "gants",
+    "torchon",
+    "produit_à_vitre",
     "savon"
 ]
 
 
-img= PhotoImage(file="assets/pomme.png")
+for i in range(len(list_img)):
+    list_img[i] = PhotoImage(file="assets/"+list_img[i]+".png")
 
 interface_stock = Frame(wn)
 frame_btns = Frame(interface_stock)
@@ -712,7 +713,7 @@ list_btn_stock = []
 btn_stock_quit = Button(interface_stock, width=20, text="retour", command=cmd_stock_quit)
 for x in range(10):
     for y in range(4):
-        new_btn = Button(frame_btns, command=list_fonction[x+y*10], image=img)
+        new_btn = Button(frame_btns, command=list_fonction[x+y*10], image=list_img[x+y*10])
         new_btn.grid(column=x, row=y)
         list_btn_stock.append(new_btn)
 
