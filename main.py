@@ -103,7 +103,7 @@ def cmd_add_article():
                     new_line = Label(frame_ticket, text=new_line_text)
                     new_line.pack(side="top")
                     list_article.append(new_line)
-                    ticket_total.set(str(int(ticket_total.get()) + int(price)))
+                    ticket_total.set(str(int(ticket_total.get()) + int(price))+"€")
                 else:
                     tkinter.messagebox.showinfo("Erreur !", "Il n'y a plus assez de stock")
     article_nb.set("")
@@ -112,7 +112,7 @@ def cmd_add_article():
 def cmd_validate_ticket():
     global list_article
     data_value = [ticket_date.get(), ticket_total.get()]
-    file = open(".db/tickets.csv", "r+")
+    file = open(".db/tickets.csv", "a")
     data = csv.writer(file)
     data.writerow(data_value)
     file.close()
@@ -121,7 +121,7 @@ def cmd_validate_ticket():
     list_article.clear()
     article_nb.set("")
     article_id.set("")
-    ticket_total.set("0")
+    ticket_total.set("0€")
     pass
 
 def cmd_interface_ticket():
@@ -131,20 +131,49 @@ def cmd_interface_ticket():
     list_article.clear()
     article_nb.set("")
     article_id.set("")
-    ticket_total.set("0")
+    ticket_total.set("0€")
     date = strftime("%m/%d/%Y", gmtime())
     ticket_date.set(date)
     interface_saler.pack_forget()
     interface_ticket.pack(pady=50)
 
+def day_exists(days, day):
+    for item in days:
+        a, b = item
+        if (a == day):
+            return True
+    return False
+
+def add_price_to_day(list_day, day, price):
+    nb_day = 0
+    for a_day in list_day:
+        nb_day += 1
+    for i in range(nb_day):
+        a, b = list_day[i]
+        if (a == day):
+            b = str(int(b) + int(price))
+            list_day[i] = (a, b)
+
 def cmd_interface_stat():
-    list_stat = []
-    with open('.db/stock.csv', 'r') as csv_file:
+    global list_label_stat
+    for line in list_label_stat:
+        line.pack_forget()
+    list_label_stat.clear()
+    list_day = []
+    with open('.db/tickets.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
-            list_stat.append(line)
-    
+            if (day_exists(list_day, line[0])):
+                add_price_to_day(list_day, line[0], line[1])
+            else:
+                list_day.append((line[0], line[1]))
+    print(list_day)
+    for day in list_day:
+        a, b = day
+        new_label = Label(interface_stat, text=a+"   -   "+str(b)+"€")
+        new_label.pack(side="top")
+        list_label_stat.append(new_label)
     interface_saler.pack_forget()
     interface_stat.pack(pady=50)
 
@@ -605,6 +634,7 @@ frame_ticket.pack(side="top")
 
 # // ----- // INTERFACE TICKET // ----- //
 # > --- creation des widgets --- <
+list_label_stat = []
 interface_stat = Frame(wn)
 btn_stat_quit = Button(interface_stat, width=20, text="retour", command=cmd_stat_quit)
 
