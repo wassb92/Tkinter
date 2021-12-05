@@ -1,12 +1,13 @@
 from tkinter import *
 from fonctions import *
 from pathlib import Path
+import pandas as pd
 import tkinter.messagebox
 import os
 import csv
 
 
-WINDOWS_SIZE = "1200x600"
+WINDOWS_SIZE = "1600x800"
 MANAGER_ID = ""
 MANAGER_PW = ""
 DATA_DIR_PATH = "./.db"
@@ -173,8 +174,6 @@ def cmd_display_all_saler():
         Label(interface_display_saler, text="________________________________________________________________", bg="white").pack()
 
 
-
-
 def cmd_clean_display_saler_id():
     display_saler_id.set("")
 
@@ -182,6 +181,55 @@ def cmd_quit_display_saler():
     cmd_clean_display_saler_id()
     interface_display_saler.pack_forget()
     interface_manager.pack(pady=50)
+
+# delete saler
+def cmd_delete_saler():
+    interface_manager.pack_forget()
+    interface_delete_saler.pack(pady=30)
+
+def delete_row():
+    new_saler_data = []
+    data = get_all_saler_datas()
+    id_exist = False
+    with open(SALER_DATA_PATH) as csvfile:
+        row_count = sum(1 for row in csvfile)
+    for i in range(0, row_count):
+        if data[i][0] != delete_saler_id.get():
+            new_saler_data.append(data[i])
+        else:
+            id_exist = True
+    if (id_exist):
+        tkinter.messagebox.showinfo("Succès", "Suppression avec succès")
+    else:
+        tkinter.messagebox.showinfo("Erreur !", "L'identifiant n'existe pas")
+    return new_saler_data
+
+def write_new_csv_saler():
+    data_list = delete_row()
+    file = open(SALER_DATA_PATH, "r+")
+    data = csv.writer(file)
+    lines_number= len(data_list)
+
+    file.truncate(0)
+    i = 0
+    while i < lines_number and data_list[i]:
+        data.writerow(data_list[i])
+        i = i + 1
+    file.close()
+
+def cmd_delete_saler_by_id():
+    write_new_csv_saler()
+
+
+def cmd_clean_delete_saler_id():
+    delete_saler_id.set("")
+
+def cmd_quit_delete_saler():
+    cmd_clean_delete_saler_id()
+    interface_delete_saler.pack_forget()
+    interface_manager.pack(pady=50)
+
+
 
 # // ----- // CREATION DE LA FENETRE // ----- //
 wn = Tk()
@@ -231,7 +279,7 @@ interface_connect.pack(pady=70)
 interface_manager = Frame(wn, bg="white")
 btn_manager_add = Button(interface_manager, width=40, text="Ajouter un(e) cassier / cassière", command=cmd_add_saler)
 btn_manager_display = Button(interface_manager, width=40, text="Afficher la liste des cassiers / cassières", command=cmd_display_saler)
-btn_manager_delete = Button(interface_manager, width=40, text="Supprimer un cassiers / cassières")
+btn_manager_delete = Button(interface_manager, width=40, text="Supprimer un cassiers / cassières", command=cmd_delete_saler)
 btn_manager_follow = Button(interface_manager, width=40, text="Suivi de vente")
 btn_manager_saler_interface = Button(interface_manager, width=40, text="Interface de cassiers / cassières")
 btn_manager_disconnect = Button(interface_manager, width=40, text="Déconnexion", command=cmd_manager_disconnect)
@@ -324,11 +372,6 @@ btn_add_saler_save.pack(pady=8)
 btn_add_saler_clean.pack()
 btn_add_saler_quit.pack()
 
-
-# Bouton Afficher Tous : Permet d’afficher tous les caissiers enregistrés sous forme de tableau.
-# Un bouton Vider : permet de vider toutes les zones de saisie
-# Un bouton Quitter : permet de quitter l’interface d’Affichage caissier
-
 # > --- creation des widgets display saler --- <
 interface_display_saler = Frame(wn, bg="white")
 display_saler_id = StringVar()
@@ -351,6 +394,31 @@ btn_display_saler_by_id.pack()
 btn_display_saler.pack()
 btn_display_saler_clean.pack()
 btn_display_saler_quit.pack()
+
+
+
+
+# > --- creation des widgets delete saler --- <
+interface_delete_saler = Frame(wn, bg="white")
+delete_saler_id = StringVar()
+
+label_delete_saler_id = Label(interface_delete_saler, text="Identifiant", bg="white")
+
+entry_delete_saler_id = Entry(interface_delete_saler, textvariable=delete_saler_id, width=20)
+
+btn_delete_saler_by_id = Button(interface_delete_saler, text="Supprimer", width=17, command=cmd_delete_saler_by_id)
+btn_delete_saler_clean = Button(interface_delete_saler, text="Vider", width=17, command=cmd_clean_delete_saler_id)
+btn_delete_saler_quit = Button(interface_delete_saler, text="Quitter", width=17, command=cmd_quit_delete_saler)
+
+
+# > --- placement des widgets delete_saler --- <
+label_delete_saler_id.pack()
+entry_delete_saler_id.pack()
+
+btn_delete_saler_by_id.pack()
+btn_delete_saler_clean.pack()
+btn_delete_saler_quit.pack()
+
 
 
 # // ----- // INTERFACE STOCK // ----- //
