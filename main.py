@@ -142,7 +142,7 @@ def cmd_add_article():
 def cmd_validate_ticket():
     global list_article
     data_value = [ticket_date.get(), ticket_total.get()]
-    file = open(".db/tickets.csv", "a")
+    file = open(".db/ticket.csv", "a")
     data = csv.writer(file)
     data.writerow(data_value)
     file.close()
@@ -190,7 +190,7 @@ def cmd_interface_stat():
         line.pack_forget()
     list_label_stat.clear()
     list_day = []
-    with open('.db/tickets.csv', 'r') as csv_file:
+    with open('.db/ticket.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
