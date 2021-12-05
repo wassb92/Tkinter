@@ -15,7 +15,7 @@ def open_tk_stock(line):
 
 def cmd_btn_stock_0():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -24,7 +24,7 @@ def cmd_btn_stock_0():
 
 def cmd_btn_stock_1():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -33,7 +33,7 @@ def cmd_btn_stock_1():
 
 def cmd_btn_stock_2():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -42,7 +42,7 @@ def cmd_btn_stock_2():
 
 def cmd_btn_stock_3():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -51,7 +51,7 @@ def cmd_btn_stock_3():
 
 def cmd_btn_stock_4():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -61,7 +61,7 @@ def cmd_btn_stock_4():
 
 def cmd_btn_stock_5():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -70,7 +70,7 @@ def cmd_btn_stock_5():
 
 def cmd_btn_stock_6():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -79,7 +79,7 @@ def cmd_btn_stock_6():
 
 def cmd_btn_stock_7():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -88,7 +88,7 @@ def cmd_btn_stock_7():
 
 def cmd_btn_stock_8():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -97,7 +97,7 @@ def cmd_btn_stock_8():
 
 def cmd_btn_stock_9():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -106,7 +106,7 @@ def cmd_btn_stock_9():
 
 def cmd_btn_stock_10():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -115,7 +115,7 @@ def cmd_btn_stock_10():
 
 def cmd_btn_stock_11():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -124,7 +124,7 @@ def cmd_btn_stock_11():
 
 def cmd_btn_stock_12():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -133,7 +133,7 @@ def cmd_btn_stock_12():
 
 def cmd_btn_stock_13():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -142,7 +142,7 @@ def cmd_btn_stock_13():
 
 def cmd_btn_stock_14():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -152,7 +152,7 @@ def cmd_btn_stock_14():
 
 def cmd_btn_stock_15():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -161,7 +161,7 @@ def cmd_btn_stock_15():
 
 def cmd_btn_stock_16():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -170,7 +170,7 @@ def cmd_btn_stock_16():
 
 def cmd_btn_stock_17():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -179,7 +179,7 @@ def cmd_btn_stock_17():
 
 def cmd_btn_stock_18():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -188,7 +188,7 @@ def cmd_btn_stock_18():
 
 def cmd_btn_stock_19():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -197,7 +197,7 @@ def cmd_btn_stock_19():
 
 def cmd_btn_stock_20():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -206,7 +206,7 @@ def cmd_btn_stock_20():
 
 def cmd_btn_stock_21():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -215,7 +215,7 @@ def cmd_btn_stock_21():
 
 def cmd_btn_stock_22():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -224,7 +224,7 @@ def cmd_btn_stock_22():
 
 def cmd_btn_stock_23():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -233,7 +233,7 @@ def cmd_btn_stock_23():
 
 def cmd_btn_stock_24():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -242,7 +242,7 @@ def cmd_btn_stock_24():
 
 def cmd_btn_stock_25():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -251,7 +251,7 @@ def cmd_btn_stock_25():
 
 def cmd_btn_stock_26():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -260,7 +260,7 @@ def cmd_btn_stock_26():
 
 def cmd_btn_stock_27():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -269,7 +269,7 @@ def cmd_btn_stock_27():
 
 def cmd_btn_stock_28():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -278,7 +278,7 @@ def cmd_btn_stock_28():
 
 def cmd_btn_stock_29():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -287,7 +287,7 @@ def cmd_btn_stock_29():
 
 def cmd_btn_stock_30():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -296,7 +296,7 @@ def cmd_btn_stock_30():
 
 def cmd_btn_stock_31():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -305,7 +305,7 @@ def cmd_btn_stock_31():
 
 def cmd_btn_stock_32():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -314,7 +314,7 @@ def cmd_btn_stock_32():
 
 def cmd_btn_stock_33():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -323,7 +323,7 @@ def cmd_btn_stock_33():
 
 def cmd_btn_stock_34():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -333,7 +333,7 @@ def cmd_btn_stock_34():
 
 def cmd_btn_stock_35():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -342,7 +342,7 @@ def cmd_btn_stock_35():
 
 def cmd_btn_stock_36():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -351,7 +351,7 @@ def cmd_btn_stock_36():
 
 def cmd_btn_stock_37():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -360,7 +360,7 @@ def cmd_btn_stock_37():
 
 def cmd_btn_stock_38():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
@@ -369,7 +369,7 @@ def cmd_btn_stock_38():
 
 def cmd_btn_stock_39():
     list_stock = []
-    with open('stock.csv', 'r') as csv_file:
+    with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:

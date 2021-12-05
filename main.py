@@ -1,5 +1,7 @@
 from tkinter import *
 from fonctions import *
+from datetime import datetime
+from time import gmtime, strftime
 from pathlib import Path
 import tkinter.messagebox
 import os
@@ -79,6 +81,72 @@ def cmd_display_stock():
 def cmd_stock_quit():
     interface_stock.pack_forget()
     interface_saler.pack(pady=50)
+
+def cmd_stat_quit():
+    interface_stat.pack_forget()
+    interface_saler.pack(pady=50)
+
+def cmd_ticket_quit():
+    interface_ticket.pack_forget()
+    interface_saler.pack(pady=50)
+
+def cmd_add_article():
+    global list_article
+    with open('.db/stock.csv', 'r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        next(csv_reader)
+        for line in csv_reader:
+            if (line[1] == article_id.get()):
+                if (int(article_nb.get()) <= int(line[3])):
+                    price = str(int(line[4]) * int(article_nb.get()))
+                    new_line_text = line[2] + "(" + line[1] + ")" + " x" + article_nb.get() + " - " + price + "€"
+                    new_line = Label(frame_ticket, text=new_line_text)
+                    new_line.pack(side="top")
+                    list_article.append(new_line)
+                    ticket_total.set(str(int(ticket_total.get()) + int(price)))
+                else:
+                    tkinter.messagebox.showinfo("Erreur !", "Il n'y a plus assez de stock")
+    article_nb.set("")
+    article_id.set("")
+
+def cmd_validate_ticket():
+    global list_article
+    data_value = [ticket_date.get(), ticket_total.get()]
+    file = open(".db/tickets.csv", "r+")
+    data = csv.writer(file)
+    data.writerow(data_value)
+    file.close()
+    for line in list_article:
+        line.pack_forget()
+    list_article.clear()
+    article_nb.set("")
+    article_id.set("")
+    ticket_total.set("0")
+    pass
+
+def cmd_interface_ticket():
+    global list_article
+    for line in list_article:
+        line.pack_forget()
+    list_article.clear()
+    article_nb.set("")
+    article_id.set("")
+    ticket_total.set("0")
+    date = strftime("%m/%d/%Y", gmtime())
+    ticket_date.set(date)
+    interface_saler.pack_forget()
+    interface_ticket.pack(pady=50)
+
+def cmd_interface_stat():
+    list_stat = []
+    with open('.db/stock.csv', 'r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        next(csv_reader)
+        for line in csv_reader:
+            list_stat.append(line)
+    
+    interface_saler.pack_forget()
+    interface_stat.pack(pady=50)
 
 # Add saler
 def cmd_add_saler():
@@ -309,8 +377,8 @@ btn_manager_disconnect.pack(pady=8)
 interface_saler = Frame(wn)
 btn_saler_disconnect = Button(interface_saler, width=20, text="Déconnexion", command=cmd_saler_disconnect)
 btn_saler_stock = Button(interface_saler, width=20, text="Afficher le stock", command=cmd_display_stock)
-btn_saler_ticket = Button(interface_saler, width=20, text="Ticket de caisse")
-btn_saler_export = Button(interface_saler, width=20, text="Export statistique")
+btn_saler_ticket = Button(interface_saler, width=20, text="Ticket de caisse", command=cmd_interface_ticket)
+btn_saler_export = Button(interface_saler, width=20, text="Export statistique", command=cmd_interface_stat)
 
 # > --- placement des widgets --- <
 btn_saler_disconnect.pack(pady=20)
@@ -500,5 +568,47 @@ for x in range(10):
 # > --- placement des widgets --- <
 frame_btns.pack()
 btn_stock_quit.pack(side="bottom")
+
+# // ----- // INTERFACE TICKET // ----- //
+# > --- creation des widgets --- <
+list_article = []
+ticket_total = StringVar()
+article_id = StringVar()
+article_nb = StringVar()
+ticket_date = StringVar()
+interface_ticket = Frame(wn)
+frame_article = Frame(interface_ticket)
+frame_ticket = Frame(interface_ticket)
+btn_ticket_quit = Button(interface_ticket, width=20, text="retour", command=cmd_ticket_quit)
+label_atricle_id = Label(frame_article, text="id:")
+label_atricle_nb = Label(frame_article, text="quantité:")
+entry_article_id = Entry(frame_article, textvariable=article_id)
+entry_article_nb = Entry(frame_article, textvariable=article_nb)
+btn_article = Button(interface_ticket, text="ajouter article", width=20, command=cmd_add_article)
+btn_ticket_validate = Button(interface_ticket, text="valider le ticket", width=20, command=cmd_validate_ticket)
+label_ticket_date = Label(frame_ticket, textvariable=ticket_date)
+label_ticket_total= Label(frame_ticket, textvariable=ticket_total)
+
+# > --- placement des widgets --- <
+btn_ticket_quit.pack(side="bottom", pady=8)
+label_atricle_id.grid(column=0, row=0)
+label_atricle_nb.grid(column=0, row=1)
+entry_article_id.grid(column=1, row=0)
+entry_article_nb.grid(column=1, row=1)
+btn_ticket_validate.pack(side="bottom")
+btn_article.pack(side="bottom")
+frame_article.pack(side="bottom", pady=4)
+label_ticket_date.pack(side="top")
+label_ticket_total.pack(side="bottom")
+frame_ticket.pack(side="top")
+
+
+# // ----- // INTERFACE TICKET // ----- //
+# > --- creation des widgets --- <
+interface_stat = Frame(wn)
+btn_stat_quit = Button(interface_stat, width=20, text="retour", command=cmd_stat_quit)
+
+# > --- placement des widgets --- <
+btn_stat_quit.pack(side="bottom", pady=8)
 
 wn.mainloop()
