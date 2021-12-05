@@ -4,8 +4,6 @@ from datetime import datetime
 from time import gmtime, strftime
 from pathlib import Path
 import tkinter.messagebox
-# from tkinter import *
-# from tkinter.ttk import *
 import os
 import csv
 
@@ -216,28 +214,24 @@ def cmd_add_saler():
 
 def save_value_csv():
     path = Path(SALER_DATA_PATH)
-    path_dir = Path(DATA_DIR_PATH)
-
-    if not path_dir.exists():
-        os.makedirs(DATA_DIR_PATH)
     if not path.is_file():
         f = open(SALER_DATA_PATH, 'x')
-    f = open(SALER_DATA_PATH, 'a')
+    f = open(SALER_DATA_PATH, 'w')
     data = csv.writer(f)
 
-    saler_data = [add_saler_id.get(), add_saler_name.get(), add_saler_firstname.get(), add_saler_birthday.get(),
-        add_saler_address.get(), add_saler_zip.get(), add_saler_login.get(), add_saler_pw.get()]
+    saler_data = [add_saler_id, add_saler_name, add_saler_firstname, add_saler_birthday,
+        add_saler_address, add_saler_zip, add_saler_login, add_saler_pw]
+
+    if not csv.reader(f) == SALER_CSV_HEADER:
+        data.writerow(SALER_CSV_HEADER.split(','))
 
     data.writerow(saler_data)
-
     f.close()
 
 def cmd_save_add_saler():
-    onClick_successfull()
     save_value_csv()
+    cmd_leave_quit_add_saler()
 
-def onClick_successfull():
-    label_add_saler_successfull.pack()
 
 def cmd_clean_add_saler():
     add_saler_id.set("")
@@ -763,5 +757,68 @@ btn_stat_quit = Button(interface_stat, width=20, text="retour", command=cmd_stat
 
 # > --- placement des widgets --- <
 btn_stat_quit.pack(side="bottom", pady=8)
+# > --- creation des widgets add saler --- <
+interface_add_saler = Frame(wn, bg="white")
+add_saler_id = StringVar()
+add_saler_name = StringVar()
+add_saler_firstname = StringVar()
+add_saler_birthday = StringVar()
+add_saler_address = StringVar()
+add_saler_zip = StringVar()
+add_saler_login = StringVar()
+add_saler_pw = StringVar()
+
+label_add_saler_id = Label(interface_add_saler, text="Identifiant (unique par caissier)", bg="white")
+label_add_saler_name = Label(interface_add_saler, text="Nom", bg="white")
+label_add_saler_firstname = Label(interface_add_saler, text="Prénom", bg="white")
+label_add_saler_birthday = Label(interface_add_saler, text="Date de naissance (AAAA/MM/JJ)", bg="white")
+label_add_saler_address = Label(interface_add_saler, text="Adresse", bg="white")
+label_add_saler_zip = Label(interface_add_saler, text="Code postal", bg="white")
+label_add_saler_login = Label(interface_add_saler, text="Login", bg="white")
+label_add_saler_pw = Label(interface_add_saler, text="Mot de passe", bg="white")
+
+entry_add_saler_id = Entry(interface_add_saler, textvariable=add_saler_id, width=20)
+entry_add_saler_name = Entry(interface_add_saler, textvariable=add_saler_name, width=20)
+entry_add_saler_firstname = Entry(interface_add_saler, textvariable=add_saler_firstname, width=20)
+entry_add_saler_birthday = Entry(interface_add_saler, textvariable=add_saler_birthday, width=20)
+entry_add_saler_address = Entry(interface_add_saler, textvariable=add_saler_address, width=20)
+entry_add_saler_zip = Entry(interface_add_saler, textvariable=add_saler_zip, width=20)
+entry_add_saler_login = Entry(interface_add_saler, textvariable=add_saler_login, width=20)
+entry_add_saler_pw = Entry(interface_add_saler, textvariable=add_saler_pw, width=20)
+
+btn_add_saler_save = Button(interface_add_saler, text="Enregistrer", command=cmd_save_add_saler, width=17)
+btn_add_saler_clean = Button(interface_add_saler, text="Vider", command=cmd_clean_add_saler, width=17)
+btn_add_saler_quit = Button(interface_add_saler, text="Quitter", command=cmd_leave_quit_add_saler, width=17)
+
+
+# > --- placement des widgets add_saler --- <
+label_add_saler_id.pack()
+entry_add_saler_id.pack()
+
+label_add_saler_name.pack()
+entry_add_saler_name.pack()
+
+label_add_saler_firstname.pack()
+entry_add_saler_firstname.pack()
+
+label_add_saler_birthday.pack()
+entry_add_saler_birthday.pack()
+
+label_add_saler_address.pack()
+entry_add_saler_address.pack()
+
+label_add_saler_zip.pack()
+entry_add_saler_zip.pack()
+
+label_add_saler_login.pack()
+entry_add_saler_login.pack()
+
+label_add_saler_pw.pack()
+entry_add_saler_pw.pack()
+
+btn_add_saler_save.pack()
+btn_add_saler_clean.pack()
+btn_add_saler_quit.pack()
+
 
 wn.mainloop()
