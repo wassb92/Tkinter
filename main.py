@@ -1,6 +1,6 @@
 from tkinter import *
 from fonctions import *
-from datetime import datetime
+from datetime import datetime, timedelta
 from time import gmtime, strftime
 from pathlib import Path
 import tkinter.messagebox
@@ -130,7 +130,10 @@ def cmd_add_article():
                     new_line = Label(frame_ticket, text=new_line_text)
                     new_line.pack(side="top")
                     list_article.append(new_line)
-                    ticket_total.set(str(int(ticket_total.get()) + int(price))+"€")
+                    total = ""
+                    for i in range(ticket_total.get().__len__()-1):
+                        total += ticket_total.get()[i]
+                    ticket_total.set(str(int(total) + int(price))+"€")
                 else:
                     tkinter.messagebox.showinfo("Erreur !", "Il n'y a plus assez de stock")
     article_nb.set("")
@@ -159,7 +162,7 @@ def cmd_interface_ticket():
     article_nb.set("")
     article_id.set("")
     ticket_total.set("0€")
-    date = strftime("%m/%d/%Y", gmtime())
+    date = strftime("%Y/%m/%d", gmtime())
     ticket_date.set(date)
     interface_saler.pack_forget()
     interface_ticket.pack(pady=50)
@@ -178,7 +181,13 @@ def add_price_to_day(list_day, day, price):
     for i in range(nb_day):
         a, b = list_day[i]
         if (a == day):
-            b = str(int(b) + int(price))
+            total1 = ""
+            for i in range(b.__len__()-1):
+                total1 += b[i]
+            total2 = ""
+            for i in range(price.__len__()-1):
+                total2 += price[i]
+            b = str(int(total1) + int(total2)) + "€"
             list_day[i] = (a, b)
 
 def cmd_interface_stat():
@@ -197,7 +206,7 @@ def cmd_interface_stat():
                 list_day.append((line[0], line[1]))
     for day in list_day:
         a, b = day
-        new_label = Label(interface_stat, text=a+"   -   "+str(b)+"€")
+        new_label = Label(interface_stat, text=a+"   -   "+str(b))
         new_label.pack(side="top")
         list_label_stat.append(new_label)
     interface_saler.pack_forget()
@@ -405,9 +414,44 @@ def cmd_quit_delete_saler():
     interface_manager.pack(pady=50)
 
 # sales follow-up
+def get_day_sales(day):
+    total_sales = 0
+    with open('.db/ticket.csv', 'r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        next(csv_reader)
+        for line in csv_reader:
+            if (line[0] == day):
+                sales = ""
+                for i in range(line[1].__len__()-1):
+                    sales += line[1][i]
+                total_sales += int(sales)
+    return (total_sales)
+
 def cmd_sales_follow_up():
+    histogram = []
+    for i in range(7):
+        date = str(datetime.today() - timedelta(days=i))
+        day = ""
+        for j in range(10):
+            if (date[j] == "-"):
+                day += "/"
+            else:
+                day += date[j]
+        histogram.append((day, get_day_sales(day)))
+    histogram.reverse()
+    max = 0
+    for histo in histogram:
+        date, sales = histo
+        if (sales > max):
+            max = sales
+    for i in range(7):
+        date, sales = histogram[i]
+        var_histogram[i].set(str(sales) + "€")
+        var_dates[i].set(date)
+        height = ((sales * 10) / max) + 1
+        label_histogram[i].config(height=int(height))
     interface_manager.pack_forget()
-    interface_sales_follow_up.pack()
+    interface_sales_follow_up.pack(pady=20)
 
 def cmd_quit_sales_follow_up():
     interface_sales_follow_up.pack_forget()
@@ -612,14 +656,37 @@ btn_delete_saler_quit.pack()
 
 
 # > --- creation des widgets sales_follow_up --- <
+label_histogram = []
+var_histogram = []
+for i in range(7):
+    var_histogram.append(StringVar())
+label_dates = []
+var_dates = []
+for i in range(7):
+    var_dates.append(StringVar())
 interface_sales_follow_up = Frame(wn, bg="white")
 label_sales_follow_up = Label(interface_sales_follow_up, text="Suivi de vente", bg="white")
 btn_delete_sales_follow_up = Button(interface_sales_follow_up, text="Quitter", width=17, command=cmd_quit_sales_follow_up)
+frame_histogram = Frame(interface_sales_follow_up, bg="white")
+frame_tab = []
+for i in range(7):
+    frame_tab.append(Frame(frame_histogram, bg="white", height=150, width=80))
+    frame_tab[i].pack_propagate(False)
+    label_histogram.append(Label(frame_tab[i], bg="light blue", width=10, height=1, textvariable=var_histogram[i]))
+for i in range(7):
+    label_dates.append(Label(frame_histogram, bg="white", width=10, height=1, textvariable=var_dates[i]))
 
 
 # > --- placement des widgets sales_follow_up --- <
 label_sales_follow_up.pack()
-btn_delete_sales_follow_up.pack()
+btn_delete_sales_follow_up.pack(side="bottom")
+for i in range(7):
+    frame_tab[i].grid(column=i, row=0, padx=1)
+for i in range(7):
+    label_histogram[i].pack(side="bottom")
+for i in range(7):
+    label_dates[i].grid(column=i, row=1, padx=1)
+frame_histogram.pack(side="top", pady=5)
 
 
 # // ----- // INTERFACE STOCK // ----- //
