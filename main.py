@@ -3,6 +3,7 @@ from fonctions import *
 from datetime import datetime, timedelta
 from time import gmtime, strftime
 from pathlib import Path
+import pandas as pd
 import tkinter.messagebox
 import os
 import csv
@@ -12,7 +13,6 @@ WINDOWS_SIZE = "1600x800"
 MANAGER_ID = "admin"
 MANAGER_PW = "admin"
 DATA_DIR_PATH = "./.db"
-SALER_DATA_PATH = "./.db/saler.csv"
 SALER_DATA_PATH = DATA_DIR_PATH + "/saler.csv"
 STOCK_DATA_PATH = DATA_DIR_PATH + "/stock.csv"
 TICKET_DATA_PATH = DATA_DIR_PATH + "/ticket.csv"
@@ -33,6 +33,11 @@ class Saler(object):
 
 saler = Saler("", "", "", "", "", "", "", "")
 
+def import_stock():
+    with open("./stock.txt",'r') as firstfile, open(STOCK_DATA_PATH,'w') as secondfile:
+        for line in firstfile:
+             secondfile.write(line)
+
 def create_empty_database():
     path_dir = Path(DATA_DIR_PATH)
     path_saler = Path(SALER_DATA_PATH)
@@ -49,7 +54,7 @@ def create_empty_database():
     if not path_stock.exists():
         f = open(STOCK_DATA_PATH, 'x')
         header = csv.writer(f)
-        header.writerow(STOCK_CSV_HEADER.split(','))
+        import_stock()
         f.close()
     if not path_ticket.exists():
         f = open(TICKET_DATA_PATH, 'x')
@@ -117,12 +122,19 @@ def cmd_ticket_quit():
     interface_ticket.pack_forget()
     interface_saler.pack(pady=50)
 
+def delete_product(line, newPrice):
+    df = pd.read_csv(STOCK_DATA_PATH)
+    df.loc[line, 'n'] = newPrice
+    df.to_csv(STOCK_DATA_PATH, index=False)
+
 def cmd_add_article():
     global list_article
+    index = 0
     with open('.db/stock.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for line in csv_reader:
+            index = index + 1
             if (line[1] == article_id.get()):
                 if (int(article_nb.get()) <= int(line[3])):
                     price = str(int(line[4]) * int(article_nb.get()))
@@ -134,6 +146,8 @@ def cmd_add_article():
                     for i in range(ticket_total.get().__len__()-1):
                         total += ticket_total.get()[i]
                     ticket_total.set(str(int(total) + int(price))+"€")
+                    total_article_left = int(line[3]) - int(entry_article_nb.get())
+                    delete_product(index - 1, total_article_left)
                 else:
                     tkinter.messagebox.showinfo("Erreur !", "Il n'y a plus assez de stock")
     article_nb.set("")
@@ -467,6 +481,7 @@ def cmd_saler_connect():
 
 
 # // ----- // CREATION DE LA FENETRE // ----- //
+create_empty_database()
 wn = Tk()
 wn.title("GesMag")
 wn.geometry(WINDOWS_SIZE)
