@@ -205,24 +205,12 @@ def add_price_to_day(list_day, day, price):
             list_day[i] = (a, b)
 
 def cmd_interface_stat():
-    global list_label_stat
-    for line in list_label_stat:
-        line.pack_forget()
-    list_label_stat.clear()
-    list_day = []
-    with open('.db/ticket.csv', 'r') as csv_file:
-        csv_reader = csv.reader(csv_file)
-        next(csv_reader)
+    with open(TICKET_DATA_PATH, 'r') as read_obj:
+        csv_reader = csv.reader(read_obj)
         for line in csv_reader:
-            if (day_exists(list_day, line[0])):
-                add_price_to_day(list_day, line[0], line[1])
-            else:
-                list_day.append((line[0], line[1]))
-    for day in list_day:
-        a, b = day
-        new_label = Label(interface_stat, text=a+"   -   "+str(b))
-        new_label.pack(side="top")
-        list_label_stat.append(new_label)
+            if line[0] == "date" and line[1] == "prix":
+                continue
+            Label(interface_stat, text=line[0] + "   -   " + line[1]).pack()
     interface_saler.pack_forget()
     interface_stat.pack(pady=50)
 
@@ -487,7 +475,7 @@ wn.title("GesMag")
 wn.geometry(WINDOWS_SIZE)
 wn.resizable(width=False, height=False)
 
-bg = PhotoImage(file="main_background.png")
+bg = PhotoImage(file="assets/main_background.png")
 label_bg = Label(wn, image=bg)
 label_bg.place(x=0, y=0)
 
@@ -749,49 +737,6 @@ list_fonction = [
     cmd_btn_stock_39
 ]
 
-list_img1 = [
-    "pomme"
-    "poire"
-    "annanas"
-    "abricot"
-    "concombre"
-    "courgette"
-    "mangue"
-    "radis"
-    "navet"
-    "carotte"
-    "baguette"
-    "pain_au_chocolat"
-    "croissant"
-    "vienoise"
-    "vienoise_au_chocolat"
-    "pain_au_raisins"
-    "muffin"
-    "paris-brest"
-    "éclair_au_chocolat"
-    "éclair_au_café"
-    "steak_haché"
-    "steak"
-    "saumon"
-    "cabillo"
-    "sole"
-    "saucisse"
-    "poulet"
-    "bar"
-    "riette"
-    "caille"
-    "balai"
-    "balaillette"
-    "pelle"
-    "serviette"
-    "detergent"
-    "eponge"
-    "gants"
-    "torchon"
-    "produit_à_vitre"
-    "savon"
-]
-
 list_img = [
     "pomme",
     "poire",
@@ -889,7 +834,6 @@ frame_ticket.pack(side="top")
 
 # // ----- // INTERFACE TICKET // ----- //
 # > --- creation des widgets --- <
-list_label_stat = []
 interface_stat = Frame(wn)
 btn_stat_quit = Button(interface_stat, width=20, text="retour", command=cmd_stat_quit)
 
