@@ -149,7 +149,7 @@ def cmd_add_article():
                     total_article_left = int(line[3]) - int(entry_article_nb.get())
                     delete_product(index - 1, total_article_left)
                 else:
-                    tkinter.messagebox.showinfo("Erreur !", "Il n'y a plus assez de stock")
+                    tkinter.messagebox.showerror("Erreur !", "Il n'y a plus assez de stock")
     article_nb.set("")
     article_id.set("")
 
@@ -220,17 +220,11 @@ def cmd_add_saler():
     interface_add_saler.pack(pady=30)
 
 def save_value_csv():
-    path = Path(SALER_DATA_PATH)
-    if not path.is_file():
-        f = open(SALER_DATA_PATH, 'x')
-    f = open(SALER_DATA_PATH, 'w')
+    f = open(SALER_DATA_PATH, 'a')
     data = csv.writer(f)
 
     saler_data = [add_saler_id.get(), add_saler_name.get(), add_saler_firstname.get(), add_saler_birthday.get(),
         add_saler_address.get(), add_saler_zip.get(), add_saler_login.get(), add_saler_pw.get()]
-
-    if not csv.reader(f) == SALER_CSV_HEADER:
-        data.writerow(SALER_CSV_HEADER.split(','))
 
     data.writerow(saler_data)
     f.close()
@@ -295,11 +289,11 @@ def error_add_saler():
 
 def cmd_save_add_saler():
     if (error_add_saler()):
-        label_add_saler_successfull.pack()
+        onClick_successfull()
         save_value_csv()
 
 def onClick_successfull():
-    label_add_saler_successfull.pack()
+    tkinter.messagebox.showinfo("Succès", "Saisie avec succès")
 
 def cmd_clean_add_saler():
     add_saler_id.set("")
@@ -313,7 +307,6 @@ def cmd_clean_add_saler():
 
 def cmd_leave_quit_add_saler():
     interface_add_saler.pack_forget()
-    label_add_saler_successfull.pack_forget()
     interface_manager.pack(pady=50)
 
 # Display saler
@@ -335,7 +328,7 @@ def cmd_display_saler_by_id():
     saler_list = find_saler_by_id()
 
     if (display_saler_id.get() == "" or saler_list == []):
-        tkinter.messagebox.showinfo("Erreur !", "L'identifiant n'existe pas")
+        tkinter.messagebox.showerror("Erreur !", "L'identifiant n'existe pas")
         return
     Label(interface_display_saler, text="Identifiant : " + saler_list[0] + "\t Nom : " + saler_list[1] + "\t Prénom : " + saler_list[2] + "\t Date de naissance : "
         + saler_list[3] + "\t Adresse : " + saler_list[4] + "\t Code postal : " + saler_list[5] + "\t Login : " + saler_list[6] + "\t Mot de passe : " + saler_list[7], bg="white").pack()
@@ -387,7 +380,7 @@ def delete_row():
     if (id_exist):
         tkinter.messagebox.showinfo("Succès", "Suppression avec succès")
     else:
-        tkinter.messagebox.showinfo("Erreur !", "L'identifiant n'existe pas")
+        tkinter.messagebox.showerror("Erreur !", "L'identifiant n'existe pas")
     return new_saler_data
 
 def write_new_csv_saler():
@@ -565,8 +558,6 @@ label_add_saler_address = Label(interface_add_saler, text="Adresse", bg="white")
 label_add_saler_zip = Label(interface_add_saler, text="Code postal", bg="white")
 label_add_saler_login = Label(interface_add_saler, text="Login", bg="white")
 label_add_saler_pw = Label(interface_add_saler, text="Mot de passe", bg="white")
-
-label_add_saler_successfull = Label(interface_add_saler, text="Vos données ont bien été sauvegardés !", bg="green")
 
 entry_add_saler_id = Entry(interface_add_saler, textvariable=add_saler_id, width=20)
 entry_add_saler_name = Entry(interface_add_saler, textvariable=add_saler_name, width=20)
