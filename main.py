@@ -430,6 +430,8 @@ def get_day_sales(day):
     return (total_sales)
 
 def cmd_sales_follow_up():
+    interface_manager.pack_forget()
+    interface_sales_follow_up.pack(pady=20)
     histogram = []
     for i in range(7):
         date = str(datetime.today() - timedelta(days=i))
@@ -446,14 +448,14 @@ def cmd_sales_follow_up():
         date, sales = histo
         if (sales > max):
             max = sales
+    if not max:
+        return
     for i in range(7):
         date, sales = histogram[i]
         var_histogram[i].set(str(sales) + "€")
         var_dates[i].set(date)
         height = ((sales * 10) / max) + 1
         label_histogram[i].config(height=int(height))
-    interface_manager.pack_forget()
-    interface_sales_follow_up.pack(pady=20)
 
 def cmd_quit_sales_follow_up():
     interface_sales_follow_up.pack_forget()
