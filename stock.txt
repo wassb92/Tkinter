@@ -1,0 +1,41 @@
+img,id,nom,n,prix
+0,0,pomme,12,5
+1,1,poire,12,5
+2,2,annanas,12,5
+3,3,abricot,12,5
+4,4,concombre,12,5
+5,5,courgette,12,5
+6,6,mangue,12,5
+7,7,radis,12,5
+8,8,navet,12,5
+9,9,carotte,12,5
+10,10,baguette,12,5
+11,11,pain au chocolat,12,5
+12,12,croissant,12,5
+13,13,vienoise,12,5
+14,14,vienoise au chocolat,12,5
+15,15,pain au raisins,12,5
+16,16,muffin,12,5
+17,17,paris-brest,12,5
+18,18,éclair au chocolat,12,5
+19,19,éclair au café,12,5
+20,20,steak haché,12,5
+21,21,steak,12,5
+22,22,saumon,12,5
+23,23,cabillo,12,5
+24,24,sole,12,5
+25,25,saucisse,12,5
+26,26,poulet,12,5
+27,27,bar,12,5
+28,28,riette,12,5
+29,29,caille,12,5
+30,30,balai,12,5
+31,31,balaillette,12,5
+32,32,pelle,12,5
+33,33,serviette,12,5
+34,34,detergent,12,5
+35,35,eponge,12,5
+36,36,gants,12,5
+37,37,torchon,12,5
+38,38,produit à vitre,12,5
+39,39,savon,12,5
